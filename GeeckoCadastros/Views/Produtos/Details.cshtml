@@ -1,0 +1,66 @@
+@model GeeckoCadastros.Models.Produtos
+
+@{
+    ViewData["Title"] = "Detalhes";
+}
+
+<h1 class="custom-title">Detalhes do Produto</h1>
+
+<div>
+    <h4>@Model.NomeProd</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Cod_Prod)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Cod_Prod)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NomeProd)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NomeProd)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CodigoBarras)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CodigoBarras)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Categoria)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Categoria)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Fabricante)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Fabricante)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Quantidade)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Quantidade)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ValorProd)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ValorProd)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index" class="btn btn-sm botoes"class="btn btn-sm botoes">Voltar para a Lista</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Cod_Prod" class="btn btn-sm botoes">Editar</a> 
+</div>

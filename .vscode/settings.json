@@ -1,0 +1,9 @@
+{
+    "omnisharp.enableRoslynAnalyzers": true,
+    "omnisharp.enableEditorConfigSupport": true,
+    "omnisharp.enableMSBuildLoadProjectsOnDemand": true,
+    "omnisharp.autoStart": true,
+    "omnisharp.projectLoadTimeout": 60,
+    "omnisharp.maxProjectResults": 1000,
+    "omnisharp.loggingLevel": "information"
+}

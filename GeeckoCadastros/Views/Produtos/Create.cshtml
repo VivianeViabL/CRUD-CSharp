@@ -1,0 +1,77 @@
+@model GeeckoCadastros.Models.Produtos
+
+@{
+    ViewData["Title"] = "Cadastro";
+}
+
+<h4>Novo Produto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mt-1"> 
+                <label asp-for="NomeProd" class="control-label"></label>
+                <input asp-for="NomeProd" class="form-control mt-1" />
+                <span asp-validation-for="NomeProd" class="text-danger"></span>
+            </div>
+                <div class="form-group mt-2">
+                <label asp-for="CodigoBarras" class="control-label"></label>
+                <input asp-for="CodigoBarras" class="form-control mt-1" id="codigoBarras" maxlength="13" pattern="\d{13}"/> <!-- O "maxlength" é um atributo que impede que o usuário digite mais de 13 caracteres no campo, o "Pattern" exige que tenha exatamente 13 dígitos -->
+                <span asp-validation-for="CodigoBarras" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="Categoria" class="control-label"></label>
+                <input asp-for="Categoria" class="form-control mt-1" />
+                <span asp-validation-for="Categoria" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="Fabricante" class="control-label"></label>
+                <input asp-for="Fabricante" class="form-control mt-1" />
+                <span asp-validation-for="Fabricante" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="Quantidade" class="control-label"></label>
+                <input asp-for="Quantidade" class="form-control mt-1" />
+                <span asp-validation-for="Fabricante" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="ValorProd" class="control-label"></label>
+                <input asp-for="ValorProd" class="form-control mt-1"/>
+                <span asp-validation-for="ValorProd" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Cadastrar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar para a Lista</a>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskMoney/3.0.2/jquery.maskMoney.min.js"></script> <!-- "Máscara" para o campo "Valor" -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+            <script>
+            $(document).ready(function(){
+                $("ValorProd").maskMoney({
+                    prefix: "R$ ", 
+                    allowNegative: false, 
+                    thousands: ".", 
+                    decimal: ",", 
+                    affixesStay: true
+                });
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.getElementById('codigoBarras').addEventListener('input', function (e) {
+            var value = this.value;
+            if (value.length > 13) {
+                this.value = value.slice(0, 13);
+            }
+        });
+    </script>
+}

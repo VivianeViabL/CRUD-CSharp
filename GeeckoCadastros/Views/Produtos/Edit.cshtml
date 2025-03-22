@@ -1,0 +1,98 @@
+@using System.Globalization
+@model GeeckoCadastros.Models.Produtos
+
+@{
+    ViewData["Title"] = "Edição";
+    var culture = new CultureInfo("pt-BR");
+}
+
+<h1>Editar</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Cod_Prod" />
+            <div class="form-group mt-1"> <!-- Classe de margem superior adicionada aqui, para o botão "Salvar" não ficar tão próximo do campo "Valor" -->
+                <label asp-for="NomeProd" class="control-label"></label>
+                <input asp-for="NomeProd" class="form-control mt-1" />
+                <span asp-validation-for="NomeProd" class="text-danger"></span>
+            </div>
+                <div class="form-group mt-2">
+                <label asp-for="CodigoBarras" class="control-label"></label>
+                <input asp-for="CodigoBarras" class="form-control mt-1" id="codigoBarras" maxlength="13" pattern="\d{13}"/>
+                <span asp-validation-for="CodigoBarras" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="Categoria" class="control-label"></label>
+                <input asp-for="Categoria" class="form-control mt-1" />
+                <span asp-validation-for="Categoria" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="Fabricante" class="control-label"></label>
+                <input asp-for="Fabricante" class="form-control mt-1" />
+                <span asp-validation-for="Fabricante" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="Quantidade" class="control-label"></label>
+                <input asp-for="Quantidade" class="form-control mt-1" />
+                <span asp-validation-for="Fabricante" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="ValorProd" class="control-label"></label>
+                <input asp-for="ValorProd" class="form-control mt-1 money" />
+                <span asp-validation-for="ValorProd" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3"> 
+                <input type="submit" value="Salvar" class="btn btn-sm botoes" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar para a Lista</a>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskMoney/3.0.2/jquery.maskMoney.min.js"></script> <!-- "Máscara" para o campo "Valor" -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+            <script>
+            $(document).ready(function(){
+                $("ValorProd").maskMoney({
+                    prefix: "R$ ", 
+                    allowNegative: false, 
+                    thousands: ".", 
+                    decimal: ",", 
+                    affixesStay: true
+                });
+            // https://learn.microsoft.com/pt-br/dotnet/api/system.windows.forms.maskedtextbox.mask?view=netframework-4.8 -- VEER
+            // Converte para formato numérico antes de enviar o formulário
+            $("form").on("submit", function () {
+                let campoValor = $('[name="ValorProd"]');
+                let valorFormatado = campoValor.maskMoney('unmasked')[0]; // Obtém o valor sem formatação
+                campoValor.val(valorFormatado); // Define o valor formatado corretamente
+            });
+
+            // Validação personalizada para aceitar valores no formato brasileiro
+            $.validator.methods.number = function (value, element) {
+                return this.optional(element) || /^-?\d+(\,\d{1,2})?$/.test(value);
+            };
+
+            // Corrige o campo de Código de Barras para não aceitar mais de 13 caracteres
+            document.getElementById('codigoBarras').addEventListener('input', function (e) {
+                var value = this.value;
+                if (value.length > 13) {
+                    this.value = value.slice(0, 13);
+                }
+            });
+        });
+    </script>
+    
+    <!-- Scripts de validação -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
